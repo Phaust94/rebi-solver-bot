@@ -2,11 +2,23 @@
 Models a word class
 """
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
+from functools import wraps
 
 __all__ = [
     "Word", 'Joiner',
 ]
+
+
+def change_init_signature(init):
+    @wraps(init)
+    def __init__(
+            self,
+            text: str,
+            allowed_first: bool = True, allowed_last: bool = True
+    ):
+        init(self, text, allowed_first, allowed_last)
+    return __init__
 
 
 @dataclass
@@ -14,8 +26,8 @@ class Word:
     __slots__ = ("text", "allowed_first", "allowed_last")
 
     text: str
-    allowed_first: bool = field(default=True)
-    allowed_last: bool = field(default=True)
+    allowed_first: bool
+    allowed_last: bool
 
     def __post_init__(self):
         self.text = self.text.lower().strip()
@@ -29,5 +41,25 @@ class Word:
         return allowed
 
 
+Word.__init__ = change_init_signature(Word.__init__)
+Word.__dataclass_fields__["allowed_first"].default = True
+Word.__dataclass_fields__["allowed_last"].default = True
+
+
+def change_init_signature_joiner(init):
+    @wraps(init)
+    def __init__(
+            self,
+            text: str,
+            allowed_first: bool = True, allowed_last: bool = False
+    ):
+        init(self, text, allowed_first, allowed_last)
+    return __init__
+
+
 class Joiner(Word):
-    allowed_last: bool = field(default=False)
+    __slots__ = ("text", "allowed_first", "allowed_last")
+
+
+Joiner.__init__ = change_init_signature(Joiner.__init__)
+Joiner.__dataclass_fields__["allowed_last"].default = False

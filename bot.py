@@ -11,6 +11,8 @@ from helpers import solve_rebus, brute_force
 # noinspection PyUnusedLocal
 def solve_rebus_cmd(update: Update, context: CallbackContext) -> None:
     txt = update.message.text
+    if txt.startswith(r"/r "):
+        txt = txt[3:]
     solved = solve_rebus(txt)
 
     update.message.reply_text(solved)

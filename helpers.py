@@ -40,7 +40,14 @@ def parts_combinations(
 
 def solve_rebus(options: str) -> str:
     parts = options.split("\n")
-    parts = [p.split(" ") for p in parts]
+    parts = [
+        [
+            word.strip().lower()
+            for word in p.split(" ")
+            if word.strip()
+        ]
+        for p in parts
+    ]
     n_parts_wo_joiners = len(parts)
     parts.extend([JOINERS for _ in range(n_parts_wo_joiners - 1)])
 

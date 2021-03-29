@@ -14,7 +14,7 @@ __all__ = [
 with open(r"russian.txt", "r", encoding="windows-1251") as f:
     DICTIONARY = f.readlines()
 
-DICTIONARY = {Word(x) for x in DICTIONARY}
+DICTIONARY = {x for x in DICTIONARY}
 
 
 def powerset(iterable):
@@ -86,3 +86,6 @@ def brute_force(mask: str) -> str:
     matching_words = matching_words[:MAX_WORDS]
     res = "\n".join(matching_words)
     return res
+
+
+solve_rebus("ко\nн")

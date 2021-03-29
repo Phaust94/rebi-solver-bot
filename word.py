@@ -61,5 +61,5 @@ class Joiner(Word):
     __slots__ = ("text", "allowed_first", "allowed_last")
 
 
-Joiner.__init__ = change_init_signature(Joiner.__init__)
+Joiner.__init__ = change_init_signature_joiner(Joiner.__init__)
 Joiner.__dataclass_fields__["allowed_last"].default = False

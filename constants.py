@@ -7,8 +7,8 @@ __all__ = [
 ]
 
 JOINERS = {
+    Joiner(""),
     Joiner("и", allowed_first=False),
-    Joiner("", allowed_last=True),
     Joiner("да", allowed_first=False),
     Joiner("с"),
     Joiner("тоже", allowed_first=False),

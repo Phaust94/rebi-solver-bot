@@ -21,7 +21,7 @@ def change_init_signature(init):
     return __init__
 
 
-@dataclass
+@dataclass(frozen=True)
 class Word:
     __slots__ = ("text", "allowed_first", "allowed_last")
 
@@ -30,7 +30,7 @@ class Word:
     allowed_last: bool
 
     def __post_init__(self):
-        self.text = self.text.lower().strip()
+        object.__setattr__(self, 'text', self.text.lower().strip())
 
     def allowed_on_loc(self, cur_loc: int, max_loc: int) -> bool:
         allowed = True

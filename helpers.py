@@ -3,6 +3,7 @@ import typing
 import re
 
 from constants import JOINERS, MAX_WORDS
+from word import Word
 
 __all__ = [
     "solve_rebus",
@@ -13,7 +14,7 @@ __all__ = [
 with open(r"russian.txt", "r", encoding="windows-1251") as f:
     DICTIONARY = f.readlines()
 
-DICTIONARY = {x.strip().lower() for x in DICTIONARY}
+DICTIONARY = {Word(x) for x in DICTIONARY}
 
 
 def powerset(iterable):
@@ -29,13 +30,16 @@ def powerset(iterable):
 
 
 def parts_combinations(
-        parts: typing.List[typing.List[str]]
+        parts: typing.List[typing.List[Word]]
 ) -> typing.Generator[typing.Tuple[str], None, None]:
     n_parts = len(parts)
     for subset in itertools.product(*parts):
         for perm in itertools.permutations(subset, n_parts):
+            for i, el in enumerate(perm):
+                if not el.allowed_on_loc(i, n_parts - 1):
+                    continue
             # noinspection PyUnresolvedReferences
-            yield tuple(x for x in perm)
+            yield tuple(x.text for x in perm)
 
 
 def solve_rebus(options: str) -> str:

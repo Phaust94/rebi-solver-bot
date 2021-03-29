@@ -37,9 +37,10 @@ def parts_combinations(
         for perm in itertools.permutations(subset, n_parts):
             for i, el in enumerate(perm):
                 if not el.allowed_on_loc(i, n_parts - 1):
-                    continue
-            # noinspection PyUnresolvedReferences
-            yield tuple(x.text for x in perm)
+                    break
+            else:
+                # noinspection PyUnresolvedReferences
+                yield tuple(x.text for x in perm)
 
 
 def solve_rebus(options: str) -> str:
@@ -86,6 +87,3 @@ def brute_force(mask: str) -> str:
     matching_words = matching_words[:MAX_WORDS]
     res = "\n".join(matching_words)
     return res
-
-
-solve_rebus("ко\nн")

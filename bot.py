@@ -5,7 +5,7 @@ os.chdir(os.path.join(*os.path.split(__file__)[:-1]))
 
 from version import __version__
 from secrets import API_KEY
-from helpers import solve_rebus
+from helpers import solve_rebus, brute_force
 
 
 # noinspection PyUnusedLocal
@@ -33,11 +33,22 @@ def error_handler(update: Update, context: CallbackContext) -> None:
     return None
 
 
+# noinspection PyUnusedLocal
+def brute_force_cmd(update: Update, context: CallbackContext) -> None:
+    txt = update.message.text
+    if txt.startswith(r"/b "):
+        txt = txt[3:]
+    res = brute_force(txt)
+    update.message.reply_text(res)
+    return None
+
+
 def main():
     updater = Updater(API_KEY, workers=1)
 
     updater.dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, handle_text))
     updater.dispatcher.add_handler(CommandHandler("info", info))
+    updater.dispatcher.add_handler(CommandHandler("b", info))
 
     updater.dispatcher.add_error_handler(error_handler)
 

@@ -1,10 +1,12 @@
 import itertools
 import typing
+import re
 
-from constants import JOINERS
+from constants import JOINERS, MAX_WORDS
 
 __all__ = [
     "solve_rebus",
+    "brute_force",
 ]
 
 
@@ -49,6 +51,9 @@ def solve_rebus(options: str) -> str:
 
     inters = DICTIONARY.intersection(words)
 
+    inters = sorted(inters)
+    inters = inters[:MAX_WORDS]
+
     res = "\n".join(
         f"{k} <- {words[k]}"
         for k in inters
@@ -57,4 +62,16 @@ def solve_rebus(options: str) -> str:
     if not res:
         res = "No solutions found"
 
+    return res
+
+
+def brute_force(mask: str) -> str:
+    matching_words = {
+        w for w in DICTIONARY
+        if re.findall(mask, w)
+    }
+
+    matching_words = sorted(matching_words)
+    matching_words = matching_words[:MAX_WORDS]
+    res = "\n".join(matching_words)
     return res

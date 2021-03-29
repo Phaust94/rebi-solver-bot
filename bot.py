@@ -48,7 +48,7 @@ def main():
 
     updater.dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, handle_text))
     updater.dispatcher.add_handler(CommandHandler("info", info))
-    updater.dispatcher.add_handler(CommandHandler("b", info))
+    updater.dispatcher.add_handler(CommandHandler("b", brute_force_cmd))
 
     updater.dispatcher.add_error_handler(error_handler)
 

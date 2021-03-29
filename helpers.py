@@ -14,7 +14,7 @@ __all__ = [
 with open(r"russian.txt", "r", encoding="windows-1251") as f:
     DICTIONARY = f.readlines()
 
-DICTIONARY = {x for x in DICTIONARY}
+DICTIONARY = {x.strip() for x in DICTIONARY}
 
 
 def powerset(iterable):

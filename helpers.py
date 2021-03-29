@@ -78,6 +78,10 @@ def solve_rebus(options: str) -> str:
 
 
 def brute_force(mask: str) -> str:
+    mask = mask.strip()
+    if not any(x in mask for x in {"^", "$"}):
+        mask = f"^{mask}$"
+
     matching_words = {
         w for w in DICTIONARY
         if re.findall(mask, w)

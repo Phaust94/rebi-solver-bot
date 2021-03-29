@@ -9,7 +9,7 @@ from helpers import solve_rebus, brute_force
 
 
 # noinspection PyUnusedLocal
-def handle_text(update: Update, context: CallbackContext) -> None:
+def solve_rebus_cmd(update: Update, context: CallbackContext) -> None:
     txt = update.message.text
     solved = solve_rebus(txt)
 
@@ -46,9 +46,10 @@ def brute_force_cmd(update: Update, context: CallbackContext) -> None:
 def main():
     updater = Updater(API_KEY, workers=1)
 
-    updater.dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, handle_text))
+    updater.dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, solve_rebus_cmd))
     updater.dispatcher.add_handler(CommandHandler("info", info))
     updater.dispatcher.add_handler(CommandHandler("b", brute_force_cmd))
+    updater.dispatcher.add_handler(CommandHandler("r", solve_rebus_cmd))
 
     updater.dispatcher.add_error_handler(error_handler)
 

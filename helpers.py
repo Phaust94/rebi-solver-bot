@@ -46,7 +46,7 @@ def solve_rebus(options: str) -> str:
     parts = options.split("\n")
     parts = [
         [
-            word.strip().lower()
+            Word(word)
             for word in p.split(" ")
             if word.strip()
         ]

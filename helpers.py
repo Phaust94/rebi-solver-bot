@@ -35,7 +35,7 @@ def parts_combinations(
     for subset in itertools.product(*parts):
         for perm in itertools.permutations(subset, n_parts):
             # noinspection PyUnresolvedReferences
-            yield tuple(x.lower() for x in perm)
+            yield tuple(x for x in perm)
 
 
 def solve_rebus(options: str) -> str:
